@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniConnect - Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+          body {
+            background: url('imgg.avif');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+            font-family: 'Poppins', sans-serif;
+        }
+        .navbar {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+        }
+        .navbar-brand {
+            font-weight: bold;
+            color: #4A90E2;
+        }
+        .container {
+            text-align: center;
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 10px 30px rgba(0,0,0,0.1);
+        }
+        .title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+        }
+        .role-card {
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .role-card:hover {
+            transform: scale(1.07);
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            color: #333;
+        }
+        .card i {
+            color: #4A90E2;
+        }
+    </style>
+</head>
+<body>
+   
+    <div class="container">
+        <h1 class="title">Welcome to UniConnect</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-3 mb-4">
+                <div class="card h-100 text-center shadow-sm role-card" onclick="window.location.href='index.html?role=student'">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <i class="bi bi-mortarboard-fill fs-1 mb-3"></i>
+                        <h5 class="card-title">Student Panel</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card h-100 text-center shadow-sm role-card" onclick="window.location.href='index.html?role=alumni'">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <i class="bi bi-person-fill fs-1 mb-3"></i>
+                        <h5 class="card-title">Alumni Panel</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card h-100 text-center shadow-sm role-card" onclick="window.location.href='index.html?role=admin'">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <i class="bi bi-person-workspace fs-1 mb-3"></i>
+                        <h5 class="card-title">Admin Panel</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
