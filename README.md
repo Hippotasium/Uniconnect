@@ -1,4 +1,4 @@
-# Uniconnect
+
 # UniConnect – Alumni & Student Connection Platform
 
 ## Team Members:
