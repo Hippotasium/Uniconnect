@@ -1,6 +1,6 @@
 
 # UniConnect – Alumni & Student Connection Platform
-
+## Team name - Team 7
 ## Team Members:
 - **Naznine Sultana Nitu** (223014127)
 - **Fabiha Fayruj** (223014011)
