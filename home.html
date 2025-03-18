@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <style>
-          body {
+        body {
             background: url('imgg.avif');
             background-repeat: no-repeat;
             background-attachment: fixed;
@@ -61,10 +61,23 @@
         .card i {
             color: #4A90E2;
         }
+        .btn-register {
+            background-color: #4A90E2;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: white;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        .btn-register:hover {
+            background-color: #357ABD;
+        }
     </style>
 </head>
 <body>
-   
     <div class="container">
         <h1 class="title">Welcome to UniConnect</h1>
         <div class="row justify-content-center">
@@ -93,6 +106,8 @@
                 </div>
             </div>
         </div>
+        <!-- Register Button -->
+        <button class="btn-register" onclick="window.location.href='registration.html'">Register</button>
     </div>
 </body>
 </html>
