@@ -1,9 +1,40 @@
+<?php
+require 'db.php'; 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id = $_POST['id']; 
+    $password = $_POST['password'];
+
+    
+    $stmt = $conn->prepare("SELECT * FROM user WHERE id = :id");
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($user && password_verify($password, $user['password'])) {
+     
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['role'] = $user['role'];
+
+       
+        if ($user['role'] === 'admin') {
+            header('Location: dashboard.php');
+        } else {
+            header('Location: home.html');
+        }
+        exit();
+    } else {
+       
+        echo "<script>alert('Invalid ID or password'); window.location.href = 'index.php';</script>";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UniConnect - Panel</title>
+    <title>UniConnect - Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <style>
@@ -110,7 +141,7 @@
     <div class="login-container">
         <h2 id="panel-title">Please log in to your account</h2>
         <form action="login.php" method="POST">
-            <input type="text" name="id" placeholder="ID" required>
+            <input type="text" name="id" placeholder="ID" required> <!-- Changed from email to ID -->
             <input type="password" name="password" placeholder="Password" required>
             <button type="submit">Login</button>
         </form>
