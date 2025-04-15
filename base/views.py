@@ -13,6 +13,8 @@ def dashboard(request):
     return render(request, 'dashboard.html')  # Render the dashboard template
 def home(request):
     return render(request, 'home.html')
+def about(request):
+    return render(request, 'about.html')
 @login_required
 def editprofile(request):
     profile = request.user.studentprofile
