@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .job-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .job-card h3 {
+            margin-bottom: 10px;
+        }
+        .content {
+            margin-left: 200px; 
+            margin-top: 70px; 
+            padding: 20px;
+        }
+        .btn-custom {
+            background-color: #000;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border: 2px solid #000;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .btn-custom:hover i {
+            color: #28a745;
+        }
+        .btn-custom i {
+            transition: color 0.3s ease;
+        }
+        .btn-custom.disabled {
+            background-color: #555555; 
+            color: #fff;
+            border-color: #d3d3d3;
+            cursor: not-allowed;
+        }
+        .btn-custom.disabled i {
+            color: #28a745;
+        }
+        .btn-message {
+            background-color: #000;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border: 2px solid #000;
+            font-weight: bold;
+        }
+        .btn-message:hover {
+            background-color: #fff;
+            color: #000;
+        }
+        .button-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    {% include 'sidebar.html' %}
+    {% include 'navbar_1.html' %}
+
+    <div class="content">
+        <div class="container">
+            <h1 class="text-center my-4">Available Jobs</h1>
+            {% for job in jobs %}
+            <div class="job-card">
+                <h3>{{ job.title }}</h3>
+                <p><strong>Description:</strong> {{ job.description }}</p>
+                <p><strong>Requirements:</strong> {{ job.requirements }}</p>
+                <p><strong>Payment:</strong> ${{ job.payment }}</p>
+                <p><strong>Contact Information:</strong> {{ job.contact_information }}</p>
+
+                
+                <div class="button-container">
+                    
+                    <button class="btn-custom interested-btn" onclick="handleInterested(this)">
+                        <i class="bi bi-hand-thumbs-up"></i> Interested
+                    </button>
+
+                    
+                    <button class="btn-message">
+                        <i class="bi bi-chat-dots"></i> Message
+                    </button>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center">No jobs available at the moment.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        function handleInterested(button) {
+            
+            button.classList.add('disabled');
+            button.disabled = true;
+
+            
+            const icon = button.querySelector('i');
+            icon.classList.remove('bi-hand-thumbs-up');
+            icon.classList.add('bi-hand-thumbs-up-fill');
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

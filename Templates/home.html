@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumni Connect</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: #f8f9fa;
+        }
+        .social-icons a {
+            color: #000;
+            background-color: #facc15;
+            border-radius: 5px;
+            padding: 8px 10px;
+            margin-right: 10px;
+            display: inline-block;
+            font-size: 18px;
+    }
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+    }
+    .sub-heading {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+    .img-section img {
+            width: 100%;
+            border-radius: 12px;
+    }
+        .carousel-item {
+            height: 82vh; 
+        }
+        .carousel-item img {
+            object-fit: cover; 
+            height: 100%;
+            width: 100%;
+        }
+        .carousel-caption-fixed {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 2;
+            color: white;
+        }
+        .carousel-caption-fixed h1 {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+        .carousel-caption-fixed p {
+            font-size: 1.2rem;
+        }
+        .carousel-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+            z-index: 1;
+        }
+        .join-section {
+            padding: 60px 20px;
+        }
+        .join-section h2 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .join-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .btn-custom {
+            background-color: white !important;
+            border: 2px solid black !important;
+            font-weight: bold !important;
+            padding: 10px 20px !important;
+}
+        .btn-custom:hover {
+            background-color: black !important;
+            color: white !important;
+        }
+        .join-section img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Include the Navbar -->
+    {% include 'navbar.html' %}
+    <!-- Carousel Section -->
+    <div id="headerCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://images.adsttc.com/media/images/629e/0012/5836/0f0e/6f23/4356/newsletter/ulab-new-campus-kashef-chowdhury-urbana_1.jpg?1654522002" alt="Image 1">
+            </div>
+            <div class="carousel-item">
+                <img src="https://ecdn.dhakatribune.net/contents/cache/images/900x505x1/uploads/media/2023/10/12/ulab-0e9b6264ad67e2ff6151708f6b3688bd.jpg?jadewits_media_id=6568" alt="Image 2">
+            </div>
+            <div class="carousel-item">
+                <img src="https://lh3.googleusercontent.com/p/AF1QipPVMU7lL0T2ozS-E7iwtuY-Tsn_sicqrK8xWKmA=s1360-w1360-h1020" alt="Image 3">
+            </div>
+        </div>
+        <div class="carousel-caption-fixed">
+            <h1>Alumni Connect</h1>
+            <p>ULAB Alumni Connect – Where Past Meets Future!</p>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#headerCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#headerCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <!-- Join the Community Section -->
+    <div class="container join-section">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h2>Join the Community</h2>
+                <p>Become part of our online community, where you can access an alumni directory and take part in mentoring. 
+                   You can find industry experts, professional contacts, and local connections. Browse for a mentor yourself 
+                   or offer your expertise and become a mentor.</p>
+                
+                <p>Already a member? <a href="{% url 'login' %}">Log in to Alumni Connect.</a></p>
+               <a href="{% url 'signup' %}" class="btn btn-custom">Sign up →</a>
+            </div>
+            <div class="col-md-6 text-center">
+                <img src="https://lotusacademics.org/images/students_corner/alumni_association/1.png" class="img-fluid">
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    {% include 'aboutus.html' %}
+    {% include 'contactus.html' %} 
+</body>
+</html>

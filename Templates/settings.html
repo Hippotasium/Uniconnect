@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .form-container {
+            margin: 50px auto;
+            max-width: 800px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .form-container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .btn-custom {
+            background-color: #000;
+            color: #fff;
+            border: 2px solid #000;
+            font-weight: bold;
+            padding: 10px 20px;
+            text-transform: uppercase;
+            
+        }
+        .btn-custom:hover {
+            background-color: #fff;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    {% include 'sidebar.html' %}
+    {% include 'navbar_1.html' %}
+
+    <div class="content">
+        <div class="container form-container">
+            <h1>Settings</h1>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <!-- Profile Picture -->
+                <div class="mb-3">
+                    <label for="profile_picture" class="form-label">Profile Picture</label>
+                    <input type="file" name="profile_picture" id="profile_picture" class="form-control">
+                </div>
+                
+                <!-- Full Name -->
+                <div class="mb-3">
+                    <label for="full_name" class="form-label">Full Name</label>
+                    <input type="text" name="full_name" id="full_name" class="form-control" value="{{ user.studentprofile.full_name }}" required>
+                </div>
+
+                <!-- Email -->
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" name="email" id="email" class="form-control" value="{{ user.email }}" required>
+                </div>
+
+                <!-- Date of Birth -->
+                <div class="mb-3">
+                    <label for="date_of_birth" class="form-label">Date of Birth</label>
+                    <input type="date" name="date_of_birth" id="date_of_birth" class="form-control" value="{{ user.studentprofile.date_of_birth|date:'Y-m-d' }}" required>
+                </div>
+
+                <!-- Student ID -->
+                <div class="mb-3">
+                    <label for="student_id" class="form-label">Student ID</label>
+                    <input type="text" name="student_id" id="student_id" class="form-control" value="{{ user.studentprofile.student_id }}" required>
+                </div>
+
+                <!-- Degree -->
+                <div class="mb-3">
+                    <label for="degree" class="form-label">Degree</label>
+                    <select name="degree" id="degree" class="form-select" required>
+                        <option value="CSE" {% if user.studentprofile.degree == "CSE" %}selected{% endif %}>CSE</option>
+                        <option value="EEE" {% if user.studentprofile.degree == "EEE" %}selected{% endif %}>EEE</option>
+                        <option value="MSJ" {% if user.studentprofile.degree == "MSJ" %}selected{% endif %}>MSJ</option>
+                        <option value="ENGLISH" {% if user.studentprofile.degree == "ENGLISH" %}selected{% endif %}>ENGLISH</option>
+                        <option value="BANGLA" {% if user.studentprofile.degree == "BANGLA" %}selected{% endif %}>BANGLA</option>
+                    </select>
+                </div>
+
+                <!-- Graduation Year -->
+                <div class="mb-3">
+                    <label for="graduation_year" class="form-label">Graduation Year</label>
+                    <input type="number" name="graduation_year" id="graduation_year" class="form-control" value="{{ user.studentprofile.graduation_year }}" required>
+                </div>
+
+                <!-- CGPA -->
+                <div class="mb-3">
+                    <label for="cgpa" class="form-label">CGPA</label>
+                    <input type="text" name="cgpa" id="cgpa" class="form-control" value="{{ user.studentprofile.CGPA }}" required>
+                </div>
+
+                <!-- Graduation Certificate -->
+                <div class="mb-3">
+                    <label for="graduation_certificate" class="form-label">Graduation Certificate</label>
+                    <input type="file" name="graduation_certificate" id="graduation_certificate" class="form-control">
+                </div>
+
+                <!-- Change Password -->
+                <div class="mb-3">
+                    <label for="password" class="form-label">New Password</label>
+                    <input type="password" name="password" id="password" class="form-control" placeholder="Enter new password (optional)">
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-center">
+                    <button type="submit" class="btn-custom">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
