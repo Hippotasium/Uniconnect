@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.utils.timezone import now  # Import timezone for default values
+from django.utils.timezone import now  
 from django.core.validators import FileExtensionValidator
 
 class StudentProfile(models.Model):
@@ -9,9 +9,9 @@ class StudentProfile(models.Model):
         ('Alumni', 'Alumni'), 
     ]
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)  # Link to Django's User model
-    student_id = models.CharField(max_length=20, unique=True, default="default_student_id")  # Default Student ID
-    full_name = models.CharField(max_length=100, default="Unknown")  # Default full name
+    user = models.OneToOneField(User, on_delete=models.CASCADE)  
+    student_id = models.CharField(max_length=20, unique=True, default="default_student_id")  
+    full_name = models.CharField(max_length=100, default="Unknown") 
     profile_picture = models.ImageField(
         upload_to='profile_pictures/',
         default='default.png',
@@ -20,23 +20,23 @@ class StudentProfile(models.Model):
     message="Only image files with extensions jpg, jpeg, png, or gif are allowed."
 )]
     )
-    date_of_birth = models.DateField(default=now)  # Default to current date
-    degree = models.CharField(max_length=50, default="Undeclared")  # Default degree
-    graduation_year = models.IntegerField(default=2000, null=True)  # Default graduation year
-    CGPA = models.FloatField(null=True, blank=True, default=0.0)  # Default CGPA
+    date_of_birth = models.DateField(default=now)  
+    degree = models.CharField(max_length=50, default="Undeclared") 
+    graduation_year = models.IntegerField(default=2000, null=True) 
+    CGPA = models.FloatField(null=True, blank=True, default=0.0)  
     graduation_certificate = models.FileField(
         upload_to='certificates/', 
-        default='certificates/default_certificate.pdf',  # Default certificate file
-    )  # Field for uploading certificates (PDF or Image)
+        default='certificates/default_certificate.pdf', 
+    )  
     role = models.CharField(
         max_length=10,
         choices=ROLE_CHOICES,
         default='Student'
-    )  # Role field with predefined choices
+    )  
 
    
 
-    # Additional fields
+    #
     job_title = models.CharField(max_length=100, blank=True, null=True, default="Unemployed")
     company = models.CharField(max_length=100, blank=True, null=True, default="None")
     industry = models.CharField(max_length=100, blank=True, null=True, default="Unknown")
@@ -80,16 +80,18 @@ class StudentProfile(models.Model):
         return f"{self.full_name} ({self.student_id})"
     
 class Job(models.Model):
-    title = models.CharField(max_length=200)  # Job title
-    description = models.TextField()  # Job description
-    requirements = models.TextField()  # Job requirements
-    payment = models.DecimalField(max_digits=10, decimal_places=2)  # Payment amount
-    post_approved = models.BooleanField(default=False)  # Whether the job post is approved
-    contact_information = models.CharField(max_length=255)  # Contact information for the job
-    poster = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posted_jobs', default=1)  # Reference to the user who posted the job
-    created_at = models.DateTimeField(auto_now_add=True)  # Timestamp for when the job was created
-    updated_at = models.DateTimeField(auto_now=True)  # Timestamp for when the job was last updated
+    title = models.CharField(max_length=200)  
+    description = models.TextField()  
+    requirements = models.TextField()  
+    payment = models.DecimalField(max_digits=10, decimal_places=2)  
+    post_approved = models.BooleanField(default=False)  
+    contact_information = models.CharField(max_length=255)  
+    poster = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posted_jobs', default=1)  
+    created_at = models.DateTimeField(auto_now_add=True)  
+    updated_at = models.DateTimeField(auto_now=True)  
+    interested_users = models.ManyToManyField(User, related_name='interested_jobs', blank=True)  
 
     def __str__(self):
         return self.title
     
+     

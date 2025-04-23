@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ job.title }}</title>
+</head>
+<style>
+.content {
+    margin-left: 200px; 
+    margin-top: 70px; 
+    padding: 20px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+}
+.job-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+</style>
+<body>
+    {% include 'sidebar.html' %}
+    {% include 'navbar_1.html' %}
+
+    <div class="content">
+        <div class="container">
+            <h1 class="text-center my-4">Job Descriptions</h1>
+            <div class="job-card">
+
+                <h1>{{ job.title }}</h1>
+                <p><strong>Description:</strong> {{ job.description }}</p>
+                <p><strong>Requirements:</strong> {{ job.requirements }}</p>
+                <p><strong>Payment:</strong> ${{ job.payment }}</p>
+                <p><strong>Contact Information:</strong> {{ job.contact_information }}</p>
+                <p><strong>Posted by:</strong> <a href="{% url 'profile' job.poster.id %}">{{ job.poster.studentprofile.full_name }}</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -59,42 +59,42 @@
             <!-- Profile Header -->
             <div class="profile-header">
                 
-                <h2>{{ user.studentprofile.full_name }}</h2>
-                {% if user.studentprofile.tagline %}
-                    <p><em>{{ user.studentprofile.tagline }}</em></p>
+                <h2>{{ profile.full_name }}</h2>
+                {% if profile.tagline %}
+                    <p><em>{{ profile.tagline }}</em></p>
                 {% endif %}
             </div>
 
             <!-- Job Information -->
-            {% if user.studentprofile.job_title or user.studentprofile.company or user.studentprofile.industry or user.studentprofile.location %}
+            {% if profile.job_title or profile.company or profile.industry or profile.location %}
             <div>
                 <h3 class="section-title">Job Information</h3>
                 <div class="editable">
-                    {% if user.studentprofile.job_title %}<p><strong>Job Title:</strong> {{ user.studentprofile.job_title }}</p>{% endif %}
-                    {% if user.studentprofile.company %}<p><strong>Company:</strong> {{ user.studentprofile.company }}</p>{% endif %}
-                    {% if user.studentprofile.industry %}<p><strong>Industry:</strong> {{ user.studentprofile.industry }}</p>{% endif %}
-                    {% if user.studentprofile.location %}<p><strong>Location:</strong> {{ user.studentprofile.location }}</p>{% endif %}
+                    {% if profile.job_title %}<p><strong>Job Title:</strong> {{ profile.job_title }}</p>{% endif %}
+                    {% if profile.company %}<p><strong>Company:</strong> {{ profile.company }}</p>{% endif %}
+                    {% if profile.industry %}<p><strong>Industry:</strong> {{ profile.industry }}</p>{% endif %}
+                    {% if profile.location %}<p><strong>Location:</strong> {{ profile.location }}</p>{% endif %}
                 </div>
             </div>
             {% endif %}
 
             <!-- About Me -->
-            {% if user.studentprofile.bio %}
+            {% if profile.bio %}
             <div>
                 <h3 class="section-title">About Me</h3>
                 <div class="editable">
-                    <p>{{ user.studentprofile.bio }}</p>
+                    <p>{{ profile.bio }}</p>
                 </div>
             </div>
             {% endif %}
 
             <!-- Work Experience -->
-            {% if user.studentprofile.work_experience and user.studentprofile.work_experience|length > 0 %}
+            {% if profile.work_experience and profile.work_experience|length > 0 %}
             <div>
                 <h3 class="section-title">Work Experience</h3>
                 <div class="editable">
                     <ul>
-                        {% for experience in user.studentprofile.work_experience %}
+                        {% for experience in profile.work_experience %}
                             <li>{{ experience }}</li>
                         {% endfor %}
                     </ul>
@@ -103,25 +103,25 @@
             {% endif %}
 
             <!-- Education -->
-            {% if user.studentprofile.university_name or user.studentprofile.degree or user.studentprofile.graduation_year or user.studentprofile.CGPA %}
+            {% if profile.university_name or profile.degree or profile.graduation_year or profile.CGPA %}
             <div>
                 <h3 class="section-title">Education</h3>
                 <div class="editable">
-                    {% if user.studentprofile.university_name %}<p><strong>University:</strong> {{ user.studentprofile.university_name }}</p>{% endif %}
-                    {% if user.studentprofile.degree %}<p><strong>Degree:</strong> {{ user.studentprofile.degree }}</p>{% endif %}
-                    {% if user.studentprofile.graduation_year %}<p><strong>Graduation Year:</strong> {{ user.studentprofile.graduation_year }}</p>{% endif %}
-                    {% if user.studentprofile.CGPA %}<p><strong>CGPA:</strong> {{ user.studentprofile.CGPA }}</p>{% endif %}
+                    {% if profile.university_name %}<p><strong>University:</strong> {{ profile.university_name }}</p>{% endif %}
+                    {% if profile.degree %}<p><strong>Degree:</strong> {{ profile.degree }}</p>{% endif %}
+                    {% if profile.graduation_year %}<p><strong>Graduation Year:</strong> {{ profile.graduation_year }}</p>{% endif %}
+                    {% if profile.CGPA %}<p><strong>CGPA:</strong> {{ profile.CGPA }}</p>{% endif %}
                     
             </div>
             {% endif %}
 
             <!-- Certifications -->
-            {% if user.studentprofile.certifications and user.studentprofile.certifications|length > 0 %}
+            {% if profile.certifications and profile.certifications|length > 0 %}
             <div>
                 <h3 class="section-title">Certifications</h3>
                 <div class="editable">
                     <ul>
-                        {% for certification in user.studentprofile.certifications %}
+                        {% for certification in profile.certifications %}
                             <li>{{ certification }}</li>
                         {% endfor %}
                     </ul>
@@ -130,12 +130,12 @@
             {% endif %}
 
             <!-- Skills -->
-            {% if user.studentprofile.skills and user.studentprofile.skills|length > 0 %}
+            {% if profile.skills and profile.skills|length > 0 %}
             <div>
                 <h3 class="section-title">Key Skills & Expertise</h3>
                 <div class="editable">
                     <ul>
-                        {% for skill in user.studentprofile.skills %}
+                        {% for skill in profile.skills %}
                             <li>{{ skill }}</li>
                         {% endfor %}
                     </ul>
@@ -144,12 +144,12 @@
             {% endif %}
 
              <!-- Projects -->
-             {% if user.studentprofile.projects and user.studentprofile.projects|length > 0 %}
+             {% if profile.projects and profile.projects|length > 0 %}
              <div>
                  <h3 class="section-title">Projects</h3>
                  <div class="editable">
                      <ul>
-                         {% for project in user.studentprofile.projects %}
+                         {% for project in profile.projects %}
                              <li>{{ project }}</li>
                          {% endfor %}
                      </ul>
@@ -158,12 +158,12 @@
              {% endif %}
 
             <!-- Awards -->
-            {% if user.studentprofile.awards and user.studentprofile.awards|length > 0 %}
+            {% if profile.awards and profile.awards|length > 0 %}
             <div>
                 <h3 class="section-title">Awards & Recognitions</h3>
                 <div class="editable">
                     <ul>
-                        {% for award in user.studentprofile.awards %}
+                        {% for award in profile.awards %}
                             <li>{{ award }}</li>
                         {% endfor %}
                     </ul>
@@ -172,7 +172,7 @@
             {% endif %}
 
              <!-- Open to Mentorship -->
-             {% if user.studentprofile.open_to_mentorship %}
+             {% if profile.open_to_mentorship %}
              <div>
                  <h3 class="section-title">Open to Mentorship</h3>
                  <div class="editable">
@@ -182,13 +182,13 @@
              {% endif %}
 
             <!-- Social Media Links -->
-            {% if user.studentprofile.linkedin or user.studentprofile.website or user.studentprofile.github %}
+            {% if profile.linkedin or profile.website or profile.github %}
             <div>
                 <h3 class="section-title">Social Media & Contact Links</h3>
                 <div class="editable">
-                    {% if user.studentprofile.linkedin %}<p><a href="{{ user.studentprofile.linkedin }}" target="_blank">LinkedIn</a></p>{% endif %}
-                    {% if user.studentprofile.website %}<p><a href="{{ user.studentprofile.website }}" target="_blank">Personal Website</a></p>{% endif %}
-                    {% if user.studentprofile.github %}<p><a href="{{ user.studentprofile.github }}" target="_blank">GitHub</a></p>{% endif %}
+                    {% if profile.linkedin %}<p><a href="{{ profile.linkedin }}" target="_blank">LinkedIn</a></p>{% endif %}
+                    {% if profile.website %}<p><a href="{{ profile.website }}" target="_blank">Personal Website</a></p>{% endif %}
+                    {% if profile.github %}<p><a href="{{ profile.github }}" target="_blank">GitHub</a></p>{% endif %}
                 </div>
             </div>
             {% endif %}

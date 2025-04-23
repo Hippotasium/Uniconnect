@@ -63,7 +63,7 @@
         <!-- Profile Picture -->
         <img src="{{ user.studentprofile.profile_picture.url|default:'/media/profile_pictures/default.png' }}" alt="Profile Picture" data-bs-toggle="modal" data-bs-target="#profilePictureModal">
         <!-- Links -->
-        <a href="{% url 'profile' %}">Profile</a>
+        <a href="{% url 'profile' request.user.id %}">Profile</a>
         <a href="{% url 'job_post' %}">Post Job</a>
         <a href="{% url 'job_list' %}">Job List</a>
     </div>

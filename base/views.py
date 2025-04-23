@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
+from django.urls import reverse
 from .models import StudentProfile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
@@ -15,7 +16,8 @@ from django.http import HttpResponseForbidden
 
 @login_required
 def dashboard(request):
-    return render(request, 'dashboard.html')  
+    profile_url = reverse('profile', args=[request.user.id])  # Generate the profile URL with user_id
+    return render(request, 'dashboard.html', {'profile_url': profile_url})  # Pass it to the template
 
 def home(request):
     return render(request, 'home.html')
@@ -49,9 +51,9 @@ def editprofile(request):
       
 
         profile.save()
-        return redirect('profile')
+        return redirect('profile', user_id=request.user.id)
+
     profile = StudentProfile.objects.get(user=request.user)
-    
     user_jobs = Job.objects.filter(poster=request.user)
 
     return render(request, 'editprofile.html', {
@@ -99,7 +101,7 @@ def settings(request):
         user.save()
         user.studentprofile.save()
 
-        return redirect('profile')
+        return redirect('profile', user_id=request.user.id)
 
     return render(request, 'settings.html')
 
@@ -114,8 +116,10 @@ def logout_view(request):
 
 
 @login_required
-def profile(request):
-    return render(request, 'profile.html')
+def profile(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    profile = user.studentprofile  
+    return render(request, 'profile.html', {'profile': profile})
 
 
 @login_required
@@ -142,24 +146,39 @@ def job_post(request):
         return redirect('job_list')  
 
     return render(request, 'job_post.html')
+
 @login_required
 def job_list(request):
    
-    jobs = Job.objects.filter(post_approved=True).order_by('-created_at')
+    jobs = Job.objects.filter(post_approved=True).select_related('poster__studentprofile').prefetch_related('interested_users')
     return render(request, 'job_list.html', {'jobs': jobs})
-
 
 @login_required
 def delete_job(request, job_id):
+    # Fetch the job and ensure the current user is the poster
     job = get_object_or_404(Job, id=job_id, poster=request.user)
-    if job.poster != request.user:
-        return HttpResponseForbidden("You are not allowed to delete this job.")
-    print("Deleting job:", job.title)
-
-
     if request.method == "POST":
         job.delete()
-        return redirect('edit_profile')
+        return redirect('job_list')  # Redirect to the job list after deletion
+    return HttpResponseForbidden("You are not allowed to delete this job.")
+
+
+    
+    
+@login_required
+def job_detail(request, job_id):
+            job = get_object_or_404(Job, id=job_id)
+            return render(request, 'job_detail.html', {'job': job})
+
+@login_required
+def mark_interest(request, job_id):
+            job = get_object_or_404(Job, id=job_id)
+            if request.user != job.poster:  
+                if not job.interested_users.filter(id=request.user.id).exists():
+                    job.interested_users.add(request.user)
+                    return JsonResponse({'success': True})
+                return JsonResponse({'success': False, 'message': 'You have already marked interest in this job.'})
+            return JsonResponse({'success': False, 'message': 'You cannot mark interest on your own job.'})
 
 
 def login_views(request):
@@ -245,3 +264,5 @@ def signup(request):
             return render(request, 'signup.html')
 
     return render(request, 'signup.html')
+
+   

@@ -178,7 +178,7 @@
 
                 <div class="text-center mt-4">
                     <button type="submit" class="btn btn-custom">Save Changes</button>
-                    <a href="{% url 'profile' %}" class="btn btn-custom">Cancel</a>
+                    <a href="{% url 'profile' request.user.id %}" class="btn btn-custom">Cancel</a>
                 </div>
 
                     <h2 class="my-4">Your Posted Jobs</h2>
