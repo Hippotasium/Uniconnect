@@ -17,12 +17,18 @@ urlpatterns = [
     path('editprofile/', views.editprofile, name='editprofile'),
     path('profile/<int:user_id>/', views.profile, name='profile'),
     path('job/<int:job_id>/', views.job_detail, name='job_detail'),
-    path('delete_job/<int:job_id>/', views.delete_job, name='delete_job'),  # Add this line
+    path('delete_job/<int:job_id>/', views.delete_job, name='delete_job'), 
+    path('job/<int:job_id>/interest/', views.mark_interest, name='mark_interest'),
+    path('job/<int:job_id>/interested_users/', views.interested_users, name='interested_users'),
+     path('notifications/', views.notifications, name='notifications'),
+    path('notifications/mark-as-read/', views.mark_notifications_as_read, name='mark_notifications_as_read'),
+]
+
     
 
     
     
-]
+
 
 # Serve media files during development
 if settings.DEBUG:

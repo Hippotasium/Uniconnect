@@ -13,6 +13,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponseForbidden
+from .models import Notification
 
 @login_required
 def dashboard(request):
@@ -172,13 +173,39 @@ def job_detail(request, job_id):
 
 @login_required
 def mark_interest(request, job_id):
-            job = get_object_or_404(Job, id=job_id)
-            if request.user != job.poster:  
-                if not job.interested_users.filter(id=request.user.id).exists():
-                    job.interested_users.add(request.user)
-                    return JsonResponse({'success': True})
-                return JsonResponse({'success': False, 'message': 'You have already marked interest in this job.'})
-            return JsonResponse({'success': False, 'message': 'You cannot mark interest on your own job.'})
+    job = get_object_or_404(Job, id=job_id)
+    if request.user != job.poster:
+        if not job.interested_users.filter(id=request.user.id).exists():
+            job.interested_users.add(request.user)
+
+            
+            Notification.objects.create(
+                user=job.poster,
+                message=f"{request.user.studentprofile.full_name} has shown interest in your job post: {job.title}."
+            )
+
+            return JsonResponse({'success': True})
+        return JsonResponse({'success': False, 'message': 'You have already marked interest in this job.'})
+    return JsonResponse({'success': False, 'message': 'You cannot mark interest on your own job.'})
+
+@login_required
+def interested_users(request, job_id):
+    job = get_object_or_404(Job, id=job_id, poster=request.user)
+    interested_users = job.interested_users.all()
+    return render(request, 'interested_users.html', {'job': job, 'interested_users': interested_users})
+
+@login_required
+def notifications(request):
+    notifications = request.user.notifications.filter(is_read=False).order_by('-created_at')
+    return JsonResponse({'notifications': [
+        {'id': n.id, 'message': n.message, 'created_at': n.created_at.strftime('%Y-%m-%d %H:%M:%S')}
+        for n in notifications
+    ]})
+
+@login_required
+def mark_notifications_as_read(request):
+    request.user.notifications.filter(is_read=False).update(is_read=True)
+    return JsonResponse({'success': True})
 
 
 def login_views(request):
