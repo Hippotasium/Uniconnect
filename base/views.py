@@ -14,6 +14,8 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponseForbidden
 from .models import Notification
+from .models import Announcement
+
 
 @login_required
 def dashboard(request):
@@ -156,14 +158,16 @@ def job_list(request):
 
 @login_required
 def delete_job(request, job_id):
-    # Fetch the job and ensure the current user is the poster
-    job = get_object_or_404(Job, id=job_id, poster=request.user)
-    if request.method == "POST":
-        job.delete()
-        return redirect('job_list')  # Redirect to the job list after deletion
-    return HttpResponseForbidden("You are not allowed to delete this job.")
+    job = get_object_or_404(Job, id=job_id)
 
+    
+    if job.poster != request.user:
+        messages.error(request, "You are not allowed to delete this job.")
+        return redirect('dashboard')
 
+    job.delete()
+    messages.success(request, "Job deleted successfully.")
+    return redirect('dashboard')
     
     
 @login_required
@@ -207,6 +211,28 @@ def mark_notifications_as_read(request):
     request.user.notifications.filter(is_read=False).update(is_read=True)
     return JsonResponse({'success': True})
 
+def search(request):
+    query = request.GET.get('q', '').strip()
+    users = User.objects.filter(studentprofile__full_name__icontains=query) if query else []
+    jobs = Job.objects.filter(title__icontains=query) if query else []
+    return render(request, 'search_results.html', {'query': query, 'users': users, 'jobs': jobs})
+
+def dashboard(request):
+   
+    announcements = Announcement.objects.all().order_by('-created_at')[:5]
+    user_jobs = Job.objects.filter(poster=request.user).order_by('-created_at')
+    
+    return render(request, 'dashboard.html', {
+        'announcements': announcements,
+        'user_jobs': user_jobs,
+    })
+
+def announcement_detail(request, announcement_id):
+    announcement = get_object_or_404(Announcement, id=announcement_id)
+    return render(request, 'announcement_detail.html', {
+        'announcement': announcement,
+        'user': request.user, 
+    })
 
 def login_views(request):
     if request.method == 'POST':

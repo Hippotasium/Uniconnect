@@ -36,7 +36,7 @@ class StudentProfile(models.Model):
 
    
 
-    #
+    
     job_title = models.CharField(max_length=100, blank=True, null=True, default="Unemployed")
     company = models.CharField(max_length=100, blank=True, null=True, default="None")
     industry = models.CharField(max_length=100, blank=True, null=True, default="Unknown")
@@ -102,4 +102,13 @@ class Notification(models.Model):
 
     def __str__(self):
         return f"Notification for {self.user.username}: {self.message}"
-     
+    
+
+class Announcement(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    image = models.ImageField(upload_to='announcements/')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title

@@ -20,9 +20,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 80px 0 20px; /* Add padding at the top to avoid overlap with the navbar */
-            position: fixed; /* Fix the sidebar to the left */
-            height: 100vh; /* Make the sidebar take the full height of the viewport */
+            padding: 80px 0 20px; 
+            position: fixed; 
+            height: 100vh; 
         }
         .sidebar img {
             width: 100px;
@@ -30,7 +30,7 @@
             border-radius: 50%;
             object-fit: cover;
             margin-bottom: 20px;
-            cursor: pointer; /* Add pointer cursor to indicate it's clickable */
+            cursor: pointer;
         }
         .sidebar a {
             color: white;
@@ -46,7 +46,7 @@
             background-color: #495057;
         }
         .content {
-            margin-left: 250px; /* Add margin to the content to account for the sidebar width */
+            margin-left: 250px; 
             padding: 20px;
             flex: 1;
         }
@@ -55,6 +55,13 @@
             height: auto;
             border-radius: 10px;
         }
+        .user-name {
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        text-align: center;
+    }
     </style>
 </head>
 <body>
@@ -62,6 +69,8 @@
     <div class="sidebar">
         <!-- Profile Picture -->
         <img src="{{ user.studentprofile.profile_picture.url|default:'/media/profile_pictures/default.png' }}" alt="Profile Picture" data-bs-toggle="modal" data-bs-target="#profilePictureModal">
+        <!-- User's Full Name -->
+        <p class="user-name">{{ user.studentprofile.full_name }}</p>   
         <!-- Links -->
         <a href="{% url 'profile' request.user.id %}">Profile</a>
         <a href="{% url 'job_post' %}">Post Job</a>

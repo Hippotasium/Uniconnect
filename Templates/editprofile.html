@@ -181,26 +181,7 @@
                     <a href="{% url 'profile' request.user.id %}" class="btn btn-custom">Cancel</a>
                 </div>
 
-                    <h2 class="my-4">Your Posted Jobs</h2>
-                        {% for job in user_jobs %}
-                        <div class="job-card">
-
-                            <h3>{{ job.title }}</h3>
-                            <p><strong>JOB ID:</strong> {{ job.id }}</p>
-                            <p><strong>Description:</strong> {{ job.description }}</p>
-                            <p><strong>Requirements:</strong> {{ job.requirements }}</p>
-                            <p><strong>Payment:</strong> ${{ job.payment }}</p>
-                            <p><strong>Contact Info:</strong> {{ job.contact_information }}</p>
-
-                            <form action="/delete_job/5/" method="post">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-danger mt-2">Delete</button>
-                            </form>
-                        </div>
-                        {% empty %}
-                        <p>You haven't posted any jobs yet.</p>
-                        {% endfor %}
-
+                    
             </form>
         </div>
     </div>

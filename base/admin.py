@@ -1,6 +1,8 @@
 from django.contrib import admin
 from .models import Job
 from .models import StudentProfile
+from .models import Announcement
+
 
 admin.site.register(StudentProfile)
 @admin.register(Job)
@@ -15,3 +17,7 @@ class StudentProfileAdmin(admin.ModelAdmin):
     search_fields = ('full_name', 'student_id', 'user__email')
     readonly_fields = ('user', 'graduation_certificate')
 
+@admin.register(Announcement)
+class AnnouncementAdmin(admin.ModelAdmin):
+    list_display = ('title', 'created_at')
+    search_fields = ('title',)

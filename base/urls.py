@@ -20,8 +20,11 @@ urlpatterns = [
     path('delete_job/<int:job_id>/', views.delete_job, name='delete_job'), 
     path('job/<int:job_id>/interest/', views.mark_interest, name='mark_interest'),
     path('job/<int:job_id>/interested_users/', views.interested_users, name='interested_users'),
-     path('notifications/', views.notifications, name='notifications'),
+    path('notifications/', views.notifications, name='notifications'),
     path('notifications/mark-as-read/', views.mark_notifications_as_read, name='mark_notifications_as_read'),
+    path('search/', views.search, name='search'),
+    path('announcement/<int:announcement_id>/', views.announcement_detail, name='announcement_detail'),
+    
 ]
 
     
