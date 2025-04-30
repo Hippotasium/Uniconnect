@@ -15,12 +15,13 @@ from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponseForbidden
 from .models import Notification
 from .models import Announcement
+from .models import MentorshipPost
 
 
 @login_required
 def dashboard(request):
-    profile_url = reverse('profile', args=[request.user.id])  # Generate the profile URL with user_id
-    return render(request, 'dashboard.html', {'profile_url': profile_url})  # Pass it to the template
+    profile_url = reverse('profile', args=[request.user.id])  
+    return render(request, 'dashboard.html', {'profile_url': profile_url})  
 
 def home(request):
     return render(request, 'home.html')
@@ -217,14 +218,16 @@ def search(request):
     jobs = Job.objects.filter(title__icontains=query) if query else []
     return render(request, 'search_results.html', {'query': query, 'users': users, 'jobs': jobs})
 
+@login_required
 def dashboard(request):
-   
     announcements = Announcement.objects.all().order_by('-created_at')[:5]
-    user_jobs = Job.objects.filter(poster=request.user).order_by('-created_at')
-    
+    user_jobs = Job.objects.filter(poster=request.user).order_by('-created_at')  # Fetch jobs posted by the user
+    user_mentorships = MentorshipPost.objects.filter(mentor=request.user).order_by('-created_at')  # Fetch mentorship posts
+
     return render(request, 'dashboard.html', {
         'announcements': announcements,
         'user_jobs': user_jobs,
+        'user_mentorships': user_mentorships,
     })
 
 def announcement_detail(request, announcement_id):
@@ -233,6 +236,51 @@ def announcement_detail(request, announcement_id):
         'announcement': announcement,
         'user': request.user, 
     })
+
+@login_required
+def mentorship_post(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        preferred_topics = request.POST.get('preferred_topics')
+        class_time = request.POST.get('class_time')
+        class_date = request.POST.get('class_date')
+        jitsi_meet_link = request.POST.get('jitsi_meet_link')
+
+        # Create a new mentorship post
+        MentorshipPost.objects.create(
+            title=title,
+            description=description,
+            preferred_topics=preferred_topics,
+            class_time=class_time,
+            class_date=class_date,
+            jitsi_meet_link=jitsi_meet_link,
+            mentor=request.user
+        )
+        return redirect('dashboard')  
+
+    return render(request, 'mentorship_post.html')
+
+
+def mentorship_list(request):
+    mentorship_posts = MentorshipPost.objects.filter(is_approved=True).order_by('-created_at')
+    return render(request, 'mentorship_list.html', {'mentorship_posts': mentorship_posts})
+
+
+def mentorship_detail(request, mentorship_id):
+    mentorship = get_object_or_404(MentorshipPost, id=mentorship_id)
+    return render(request, 'mentorship_detail.html', {'mentorship': mentorship})
+
+@login_required
+def delete_mentorship(request, mentorship_id):
+    mentorship = get_object_or_404(MentorshipPost, id=mentorship_id)
+
+    if mentorship.mentor != request.user:
+        return HttpResponseForbidden("You are not allowed to delete this mentorship post.")
+
+    mentorship.delete()
+    messages.success(request, "Mentorship post deleted successfully.")
+    return redirect('dashboard')
 
 def login_views(request):
     if request.method == 'POST':

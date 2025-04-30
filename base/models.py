@@ -112,3 +112,17 @@ class Announcement(models.Model):
 
     def __str__(self):
         return self.title
+    
+class MentorshipPost(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    preferred_topics = models.TextField()
+    class_time = models.CharField(max_length=255)  
+    class_date = models.DateField()  
+    jitsi_meet_link = models.URLField()  
+    mentor = models.ForeignKey(User, on_delete=models.CASCADE)  
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_approved = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.title

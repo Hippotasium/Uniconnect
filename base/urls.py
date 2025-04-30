@@ -24,7 +24,10 @@ urlpatterns = [
     path('notifications/mark-as-read/', views.mark_notifications_as_read, name='mark_notifications_as_read'),
     path('search/', views.search, name='search'),
     path('announcement/<int:announcement_id>/', views.announcement_detail, name='announcement_detail'),
-    
+    path('mentorship_post/', views.mentorship_post, name='mentorship_post'),
+    path('mentorship_list/', views.mentorship_list, name='mentorship_list'),
+    path('mentorship/<int:mentorship_id>/', views.mentorship_detail, name='mentorship_detail'),
+    path('mentorship/delete/<int:mentorship_id>/', views.delete_mentorship, name='delete_mentorship'),
 ]
 
     

@@ -81,6 +81,7 @@
                 <p><strong>Posted on:</strong> {{ job.created_at|date:"M d, Y" }}</p>
                 <a href="{% url 'job_detail' job.id %}">See more...</a>
                 <br><br>
+                <a href="{% url 'interested_users' job.id %}" class="btn btn-dark btn-sm">View Interested Users</a>
                 {% if messages %}
                 <div class="container mt-3">
                     {% for message in messages %}
@@ -98,6 +99,31 @@
         <p>You have not posted any jobs yet.</p>
         {% endif %}
 
+           <!-- Mentorship Post Section -->
+        <h2 class="mt-5">Your Mentorship Posts</h2>
+        {% if user_mentorships %}
+        <div class="container">
+            {% for mentorship in user_mentorships %}
+            <div class="job-card">
+                <h3>{{ mentorship.title }}</h3>
+                <p><strong>Description:</strong> {{ mentorship.description|truncatewords:20 }}</p>
+                <p><strong>Preferred Topics:</strong> {{ mentorship.preferred_topics|truncatewords:20 }}</p>
+                <p><strong>Class Time:</strong> {{ mentorship.class_time }}</p>
+                <p><strong>Class Date:</strong> {{ mentorship.class_date|date:"M d, Y" }}</p>
+                <p><strong>Jitsi-Meet Link:</strong> <a href="{{ mentorship.jitsi_meet_link }}" target="_blank">Join Meeting</a></p>
+                <p><strong>Posted on:</strong> {{ mentorship.created_at|date:"M d, Y" }}</p>
+                <a href="{% url 'mentorship_detail' mentorship.id %}">See more...</a>
+                <br><br>
+                
+                <a href="{% url 'delete_mentorship' mentorship.id %}" class="btn btn-danger btn-sm">Delete</a>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>You have not posted any mentorships yet.</p>
+        {% endif %}
+
+        
         </div>
     </div>
         

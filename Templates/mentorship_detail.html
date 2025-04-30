@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ mentorship.title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .content {
+            margin-left: 200px; 
+            margin-top: 70px; 
+            padding: 20px;
+        }
+        .mentorship-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .mentorship-card h3 {
+            margin-bottom: 10px;
+        }
+        .btn-custom {
+            background-color: #000;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border: 2px solid #000;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .btn-custom:hover i {
+            color: #28a745;
+        }
+        .btn-custom i {
+            transition: color 0.3s ease;
+        }
+        .btn-custom.disabled {
+            background-color: #555555; 
+            color: #fff;
+            border-color: #d3d3d3;
+            cursor: not-allowed;
+        }
+        .btn-custom.disabled i {
+            color: #28a745;
+        }
+        .button-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar_1.html' %}
+    {% include 'sidebar.html' %}
+
+    <div class="content">
+        <div class="container mt-5">
+            <div class="mentorship-card">
+                <h1>{{ mentorship.title }}</h1>
+                <p><strong>Description:</strong> {{ mentorship.description }}</p>
+                <p><strong>Preferred Topics:</strong> {{ mentorship.preferred_topics }}</p>
+                <p><strong>Class Time:</strong> {{ mentorship.class_time }}</p>
+                <p><strong>Class Date:</strong> {{ mentorship.class_date|date:"M d, Y" }}</p>
+                <p><strong>Jitsi-Meet Link:</strong> <a href="{{ mentorship.jitsi_meet_link }}" target="_blank">Join Meeting</a></p>
+                <p><strong>Mentor:</strong> <a href="{% url 'profile' mentorship.mentor.id %}">{{ mentorship.mentor.studentprofile.full_name }}</a></p>
+
+                <div class="button-container">
+                    {% if user == mentorship.mentor %}
+                        <form action="{% url 'delete_mentorship' mentorship.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+    
+                        
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

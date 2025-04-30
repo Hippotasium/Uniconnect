@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import Job
 from .models import StudentProfile
 from .models import Announcement
+from .models import MentorshipPost
 
 
 admin.site.register(StudentProfile)
@@ -21,3 +22,15 @@ class StudentProfileAdmin(admin.ModelAdmin):
 class AnnouncementAdmin(admin.ModelAdmin):
     list_display = ('title', 'created_at')
     search_fields = ('title',)
+
+@admin.register(MentorshipPost)
+class MentorshipPostAdmin(admin.ModelAdmin):
+    list_display = ('title', 'mentor', 'class_date', 'is_approved', 'created_at')
+    list_filter = ('is_approved', 'class_date')
+    search_fields = ('title', 'mentor__username', 'mentor__email')
+    actions = ['approve_posts']
+
+    def approve_posts(self, request, queryset):
+        queryset.update(is_approved=True)
+        self.message_user(request, "Selected posts have been approved.")
+    approve_posts.short_description = "Approve selected mentorship posts"
