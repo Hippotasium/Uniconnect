@@ -22,7 +22,7 @@ class StudentProfile(models.Model):
     )
     date_of_birth = models.DateField(default=now)  
     degree = models.CharField(max_length=50, default="Undeclared") 
-    graduation_year = models.IntegerField(default=2000, null=True) 
+    graduation_year = models.IntegerField(default=2000, null=True, blank=True) 
     CGPA = models.FloatField(null=True, blank=True, default=0.0)  
     graduation_certificate = models.FileField(
         upload_to='certificates/', 
@@ -43,13 +43,13 @@ class StudentProfile(models.Model):
     tagline = models.CharField(max_length=255, blank=True, null=True, default="No tagline provided")
     location = models.CharField(max_length=100, blank=True, null=True, default="Unknown")
     bio = models.TextField(blank=True, null=True, default="No bio provided")
-    work_experience = models.JSONField(blank=True, null=True, default=list)  # Store work experience as JSON
-    certifications = models.JSONField(blank=True, null=True, default=list)  # Store certifications as JSON
-    skills = models.JSONField(blank=True, null=True, default=list)  # Store skills as JSON
-    projects = models.JSONField(blank=True, null=True, default=list)  # Store projects as JSON
+    work_experience = models.JSONField(blank=True, null=True, default=list)  
+    certifications = models.JSONField(blank=True, null=True, default=list)  
+    skills = models.JSONField(blank=True, null=True, default=list)  
+    projects = models.JSONField(blank=True, null=True, default=list)  
     open_to_mentorship = models.BooleanField(default=False)
     offering_referrals = models.BooleanField(default=False)
-    awards = models.JSONField(blank=True, null=True, default=list)  # Store awards as JSON
+    awards = models.JSONField(blank=True, null=True, default=list)  
     linkedin = models.URLField(blank=True, null=True, default="https://linkedin.com")
     website = models.URLField(blank=True, null=True, default="https://example.com")
     github = models.URLField(blank=True, null=True, default="https://github.com")
